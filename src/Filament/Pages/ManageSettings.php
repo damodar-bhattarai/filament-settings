@@ -36,6 +36,7 @@ class ManageSettings extends Page implements HasForms
 
     public ?array $data = [];
 
+    #[Livewire\Attributes\Url]
     public bool $modifyMode = false;
 
     // ─── Navigation (delegated to Plugin) ────────────────────────────
