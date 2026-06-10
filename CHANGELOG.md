@@ -2,6 +2,12 @@
 
 All notable changes to `filament-settings` will be documented in this file.
 
+## v1.0.1 - 2026-06-10
+
+### 🐛 Bug Fixes
+
+- Fix `Cannot redeclare non static Filament\Pages\Page::$view as static` error by declaring the `$view` property as non-static to match Filament/Livewire base class.
+
 ## v1.0.0 - 2025-06-10
 
 ### 🎉 Initial Release

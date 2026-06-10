@@ -32,7 +32,7 @@ class ManageSettings extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static string $view = 'filament-settings::pages.manage-settings';
+    protected string $view = 'filament-settings::pages.manage-settings';
 
     public ?array $data = [];
 
