@@ -224,7 +224,7 @@ class ManageSettings extends Page implements HasForms
                         ->success()
                         ->send();
 
-                    $this->redirect(request()->header('Referer'));
+                    $this->refreshSchema();
                 })
                 ->visible(fn () => $this->modifyMode && $this->canModifyFields()),
 
@@ -269,7 +269,7 @@ class ManageSettings extends Page implements HasForms
                         ->success()
                         ->send();
 
-                    $this->redirect(request()->header('Referer'));
+                    $this->refreshSchema();
                 })
                 ->visible(fn () => $this->modifyMode && $this->canModifyFields()),
         ];
@@ -470,7 +470,7 @@ class ManageSettings extends Page implements HasForms
                         ->success()
                         ->send();
 
-                    $this->redirect(request()->header('Referer'));
+                    $this->refreshSchema();
                 }),
         );
 
@@ -498,7 +498,7 @@ class ManageSettings extends Page implements HasForms
                         ->success()
                         ->send();
 
-                    $this->redirect(request()->header('Referer'));
+                    $this->refreshSchema();
                 }),
         );
 
@@ -524,7 +524,7 @@ class ManageSettings extends Page implements HasForms
                         ->warning()
                         ->send();
 
-                    $this->redirect(request()->header('Referer'));
+                    $this->refreshSchema();
                 }),
         );
 
@@ -630,6 +630,30 @@ class ManageSettings extends Page implements HasForms
         }
 
         $this->form->fill($data);
+    }
+
+    /**
+     * Refresh the page to rebuild the schema, keeping modifyMode and tab state.
+     */
+    protected function refreshSchema(): void
+    {
+        $referer = request()->header('Referer');
+        $url = $referer ?: static::getUrl();
+
+        $urlParts = parse_url($url);
+        parse_str($urlParts['query'] ?? '', $query);
+        $query['modifyMode'] = 1;
+
+        $newQuery = http_build_query($query);
+
+        $scheme = $urlParts['scheme'] ?? 'http';
+        $host = $urlParts['host'] ?? 'localhost';
+        $port = isset($urlParts['port']) ? ':' . $urlParts['port'] : '';
+        $path = $urlParts['path'] ?? '/';
+
+        $newUrl = $scheme . '://' . $host . $port . $path . '?' . $newQuery;
+
+        $this->redirect($newUrl);
     }
 
     /**
@@ -765,7 +789,7 @@ class ManageSettings extends Page implements HasForms
         $this->clearSettingsCache();
         $this->fillFormFromDatabase();
 
-        $this->redirect(request()->header('Referer'));
+        $this->refreshSchema();
     }
 
     /**
