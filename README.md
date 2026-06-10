@@ -34,23 +34,9 @@ A powerful, tabbed settings management page for your Filament panel that lets yo
 composer require damodar-bhattarai/filament-settings
 ```
 
-This will also install the [`damodar-bhattarai/settings`](https://github.com/damodar-bhattarai/settings) base package if not already installed.
+This will also install the [`damodar-bhattarai/settings`](https://github.com/damodar-bhattarai/settings) base package if not already installed. The plugin automatically copies and runs all required migrations on the first page load!
 
-### Step 2: Publish and Run Migrations
-
-First, publish the database migrations for the base settings package:
-
-```bash
-php artisan vendor:publish --provider="DamodarBhattarai\Settings\SettingsServiceProvider"
-```
-
-Then, run the migrations to create the tables:
-
-```bash
-php artisan migrate
-```
-
-### Step 3: Register the Plugin
+### Step 2: Register the Plugin
 
 Add the plugin to your Filament panel provider (e.g., `app/Providers/Filament/AdminPanelProvider.php`):
 
@@ -67,7 +53,7 @@ public function panel(Panel $panel): Panel
 }
 ```
 
-### Step 4: Publish Config (Optional)
+### Step 3: Publish Config (Optional)
 
 ```bash
 php artisan vendor:publish --tag="filament-settings-config"

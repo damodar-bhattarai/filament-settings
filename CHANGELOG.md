@@ -2,13 +2,7 @@
 
 All notable changes to `filament-settings` will be documented in this file.
 
-## v1.0.3 - 2026-06-10
-
-### 🐛 Bug Fixes
-
-- Add `Schema::hasTable('settings')` checks before database queries in `ManageSettings` page class. This prevents `QueryException` errors (like `no such table: settings`) during Laravel bootstrapping (e.g. `artisan vendor:publish` or `migrate`) before database migrations are run.
-
-## v1.0.2 - 2026-06-10
+## v1.1.0 - 2026-06-10
 
 ### 🎉 Initial Release
 
@@ -17,7 +11,8 @@ All notable changes to `filament-settings` will be documented in this file.
 - Modify Fields mode with add, delete, reorder, relabel, and move capabilities
 - Three-level authorization: Plugin callback → Laravel Gate → Config default
 - CSS & Scripts tab with side-by-side layout for Header/Body/Footer
-- Auto-seeding of default settings on first load
+- Zero-configuration auto-publishing of base package migrations/seeders during install
+- Automatic database migration and default settings seeding on first settings page load
 - Automatic cache clearing on save
 - Dark theme support
 - Compatible with Filament v4 and v5

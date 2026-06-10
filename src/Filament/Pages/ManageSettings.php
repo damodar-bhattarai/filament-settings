@@ -98,6 +98,16 @@ class ManageSettings extends Page implements HasForms
 
     public function mount(): void
     {
+        if (! \Illuminate\Support\Facades\Schema::hasTable('settings')) {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('migrate', [
+                    '--force' => true,
+                ]);
+            } catch (\Exception $e) {
+                // Catch migration failures gracefully
+            }
+        }
+
         $this->seedDefaultSettingsIfNeeded();
         $this->fillFormFromDatabase();
     }
