@@ -4,18 +4,6 @@ All notable changes to `filament-settings` will be documented in this file.
 
 ## v1.0.2 - 2026-06-10
 
-### 🐛 Bug Fixes
-
-- Fix `getSlug()` method signature to match the parent Filament page class declaration `getSlug(?Filament\Panel $panel = null): string`.
-
-## v1.0.1 - 2026-06-10
-
-### 🐛 Bug Fixes
-
-- Fix `Cannot redeclare non static Filament\Pages\Page::$view as static` error by declaring the `$view` property as non-static to match Filament/Livewire base class.
-
-## v1.0.0 - 2025-06-10
-
 ### 🎉 Initial Release
 
 - Tabbed settings management page with 6 default tabs (General, Contact, Social Media, SEO, Appearance, CSS & Scripts)
