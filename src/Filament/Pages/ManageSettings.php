@@ -8,17 +8,17 @@ use DamodarBhattarai\Settings\Models\Setting;
 use Filament\Actions\Action as PageAction;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\ColorPicker;
-use Filament\Forms\Components\Component;
+use Filament\Schemas\Components\Component;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\Tabs\Tab;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Actions\Action as FormAction;
+use Filament\Actions\Action as FormAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
@@ -152,22 +152,19 @@ class ManageSettings extends Page implements HasForms
 
     protected function getHeaderActions(): array
     {
-        $actions = [];
-
-        // Toggle Modify Mode button
-        if ($this->canModifyFields()) {
-            $actions[] = PageAction::make('toggleModifyMode')
+        return [
+            // Toggle Modify Mode button
+            PageAction::make('toggleModifyMode')
                 ->label(fn () => $this->modifyMode ? 'Exit Modify Mode' : 'Modify Fields')
                 ->icon(fn () => $this->modifyMode ? 'heroicon-o-lock-closed' : 'heroicon-o-pencil-square')
                 ->color(fn () => $this->modifyMode ? 'warning' : 'gray')
                 ->action(function () {
                     $this->modifyMode = ! $this->modifyMode;
-                });
-        }
+                })
+                ->visible(fn () => $this->canModifyFields()),
 
-        // Add New Setting (only in modify mode)
-        if ($this->modifyMode && $this->canModifyFields()) {
-            $actions[] = PageAction::make('addSetting')
+            // Add New Setting (only in modify mode)
+            PageAction::make('addSetting')
                 ->label('Add Setting')
                 ->icon('heroicon-o-plus-circle')
                 ->color('success')
@@ -225,10 +222,11 @@ class ManageSettings extends Page implements HasForms
                         ->body("'{$data['label']}' has been added to the '{$this->getGroupLabel($data['group'])}' tab.")
                         ->success()
                         ->send();
-                });
+                })
+                ->visible(fn () => $this->modifyMode && $this->canModifyFields()),
 
             // Add New Tab
-            $actions[] = PageAction::make('addTab')
+            PageAction::make('addTab')
                 ->label('Add Tab')
                 ->icon('heroicon-o-folder-plus')
                 ->color('info')
@@ -267,10 +265,9 @@ class ManageSettings extends Page implements HasForms
                         ->body("'{$data['tab_label']}' tab has been added.")
                         ->success()
                         ->send();
-                });
-        }
-
-        return $actions;
+                })
+                ->visible(fn () => $this->modifyMode && $this->canModifyFields()),
+        ];
     }
 
     // ─── Form Definition ─────────────────────────────────────────────
@@ -287,7 +284,7 @@ class ManageSettings extends Page implements HasForms
     /**
      * Build the tabbed form layout from database settings.
      */
-    protected function buildTabs(): Tabs
+    protected function buildTabs()
     {
         $allSettings = $this->getAllSettingsGrouped();
         $tabConfig = config('filament-settings.default_settings', []);
@@ -313,14 +310,13 @@ class ManageSettings extends Page implements HasForms
 
         return Tabs::make('settings_tabs')
             ->tabs($tabs)
-            ->contained(false)
             ->persistTabInQueryString('tab');
     }
 
     /**
      * Build a single tab with its fields.
      */
-    protected function buildTab(string $groupKey, array $config, Collection $settings): Tab
+    protected function buildTab(string $groupKey, array $config, Collection $settings)
     {
         // Special layout for CSS & Scripts tab
         if ($groupKey === 'css_scripts') {
@@ -393,7 +389,7 @@ class ManageSettings extends Page implements HasForms
     /**
      * Build the appropriate Filament form field for a setting based on its type.
      */
-    protected function buildFieldForSetting(Setting $setting): Component
+    protected function buildFieldForSetting(Setting $setting)
     {
         $fieldName = "settings.{$setting->key}";
         $label = $setting->label ?: Str::title(str_replace('_', ' ', $setting->key));

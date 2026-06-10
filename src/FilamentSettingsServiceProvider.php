@@ -21,10 +21,6 @@ class FilamentSettingsServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         parent::packageRegistered();
-
-        if (! class_exists('Filament\Forms\Components\Actions\Action')) {
-            class_alias('Filament\Actions\Action', 'Filament\Forms\Components\Actions\Action');
-        }
     }
 
     public function packageBooted(): void
