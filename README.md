@@ -36,7 +36,15 @@ composer require damodar-bhattarai/filament-settings
 
 This will also install the [`damodar-bhattarai/settings`](https://github.com/damodar-bhattarai/settings) base package if not already installed.
 
-### Step 2: Run Migrations
+### Step 2: Publish and Run Migrations
+
+First, publish the database migrations for the base settings package:
+
+```bash
+php artisan vendor:publish --provider="DamodarBhattarai\Settings\SettingsServiceProvider"
+```
+
+Then, run the migrations to create the tables:
 
 ```bash
 php artisan migrate

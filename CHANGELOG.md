@@ -2,6 +2,12 @@
 
 All notable changes to `filament-settings` will be documented in this file.
 
+## v1.0.3 - 2026-06-10
+
+### 🐛 Bug Fixes
+
+- Add `Schema::hasTable('settings')` checks before database queries in `ManageSettings` page class. This prevents `QueryException` errors (like `no such table: settings`) during Laravel bootstrapping (e.g. `artisan vendor:publish` or `migrate`) before database migrations are run.
+
 ## v1.0.2 - 2026-06-10
 
 ### 🎉 Initial Release

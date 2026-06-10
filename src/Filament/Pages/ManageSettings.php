@@ -562,6 +562,10 @@ class ManageSettings extends Page implements HasForms
      */
     protected function fillFormFromDatabase(): void
     {
+        if (! \Illuminate\Support\Facades\Schema::hasTable('settings')) {
+            return;
+        }
+
         $settings = Setting::orderBy('tab_order')->get();
 
         $data = ['settings' => []];
@@ -598,6 +602,10 @@ class ManageSettings extends Page implements HasForms
             return;
         }
 
+        if (! \Illuminate\Support\Facades\Schema::hasTable('settings')) {
+            return;
+        }
+
         if (Setting::count() > 0) {
             return;
         }
@@ -625,6 +633,10 @@ class ManageSettings extends Page implements HasForms
      */
     protected function getAllSettingsGrouped(): Collection
     {
+        if (! \Illuminate\Support\Facades\Schema::hasTable('settings')) {
+            return collect();
+        }
+
         return Setting::orderBy('tab_order')->get()->groupBy('group');
     }
 
@@ -639,6 +651,10 @@ class ManageSettings extends Page implements HasForms
         // Config-defined groups
         foreach ($tabConfig as $key => $group) {
             $options[$key] = $group['label'] ?? Str::title(str_replace('_', ' ', $key));
+        }
+
+        if (! \Illuminate\Support\Facades\Schema::hasTable('settings')) {
+            return $options;
         }
 
         // Any additional groups from the database
