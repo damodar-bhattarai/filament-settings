@@ -36,7 +36,6 @@ class ManageSettings extends Page implements HasForms
 
     public ?array $data = [];
 
-    #[Livewire\Attributes\Url]
     public bool $modifyMode = false;
 
     // ─── Navigation (delegated to Plugin) ────────────────────────────
@@ -99,6 +98,8 @@ class ManageSettings extends Page implements HasForms
 
     public function mount(): void
     {
+        $this->modifyMode = session()->get('manage_settings_modify_mode', false);
+
         if (! \Illuminate\Support\Facades\Schema::hasTable('settings')) {
             try {
                 $paths = [];
@@ -161,6 +162,7 @@ class ManageSettings extends Page implements HasForms
                 ->color(fn () => $this->modifyMode ? 'warning' : 'gray')
                 ->action(function () {
                     $this->modifyMode = ! $this->modifyMode;
+                    session()->put('manage_settings_modify_mode', $this->modifyMode);
                 })
                 ->visible(fn () => $this->canModifyFields()),
 
@@ -638,22 +640,7 @@ class ManageSettings extends Page implements HasForms
     protected function refreshSchema(): void
     {
         $referer = request()->header('Referer');
-        $url = $referer ?: static::getUrl();
-
-        $urlParts = parse_url($url);
-        parse_str($urlParts['query'] ?? '', $query);
-        $query['modifyMode'] = 'true';
-
-        $newQuery = http_build_query($query);
-
-        $scheme = $urlParts['scheme'] ?? 'http';
-        $host = $urlParts['host'] ?? 'localhost';
-        $port = isset($urlParts['port']) ? ':' . $urlParts['port'] : '';
-        $path = $urlParts['path'] ?? '/';
-
-        $newUrl = $scheme . '://' . $host . $port . $path . '?' . $newQuery;
-
-        $this->redirect($newUrl);
+        $this->redirect($referer ?: static::getUrl());
     }
 
     /**
