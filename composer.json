@@ -1,0 +1,51 @@
+{
+    "name": "damodar-bhattarai/filament-settings",
+    "description": "A Filament panel plugin for managing website settings with categorized tabs. Provides a beautiful UI for the damodar-bhattarai/settings package.",
+    "keywords": [
+        "laravel",
+        "filament",
+        "settings",
+        "admin",
+        "panel",
+        "plugin"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Damodar Bhattarai",
+            "email": "work@damodar.dev",
+            "homepage": "https://damodar.dev",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "damodar-bhattarai/settings": "^1.0",
+        "filament/filament": "^4.0 || ^5.0",
+        "spatie/laravel-package-tools": "^1.16"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0 || ^10.0",
+        "pestphp/pest": "^2.0 || ^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DamodarBhattarai\\FilamentSettings\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DamodarBhattarai\\FilamentSettings\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DamodarBhattarai\\FilamentSettings\\FilamentSettingsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
