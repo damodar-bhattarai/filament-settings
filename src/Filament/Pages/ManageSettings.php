@@ -85,7 +85,7 @@ class ManageSettings extends Page implements HasForms
         }
     }
 
-    public static function getSlug(): string
+    public static function getSlug(?\Filament\Panel $panel = null): string
     {
         try {
             return FilamentSettingsPlugin::get()->getSlug();

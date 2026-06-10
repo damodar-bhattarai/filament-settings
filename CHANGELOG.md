@@ -2,6 +2,12 @@
 
 All notable changes to `filament-settings` will be documented in this file.
 
+## v1.0.2 - 2026-06-10
+
+### 🐛 Bug Fixes
+
+- Fix `getSlug()` method signature to match the parent Filament page class declaration `getSlug(?Filament\Panel $panel = null): string`.
+
 ## v1.0.1 - 2026-06-10
 
 ### 🐛 Bug Fixes
