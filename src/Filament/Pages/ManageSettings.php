@@ -100,9 +100,31 @@ class ManageSettings extends Page implements HasForms
     {
         if (! \Illuminate\Support\Facades\Schema::hasTable('settings')) {
             try {
-                \Illuminate\Support\Facades\Artisan::call('migrate', [
-                    '--force' => true,
-                ]);
+                $paths = [];
+
+                // 1. Base settings migration (copied to database/migrations)
+                $baseMigrations = glob(database_path('migrations/*_create_settings_table.php'));
+                if (! empty($baseMigrations)) {
+                    $paths = array_merge($paths, $baseMigrations);
+                }
+
+                // 2. Our plugin migration (either published or vendor path)
+                $pluginMigrations = glob(database_path('migrations/*_add_filament_columns_to_settings_table.php'));
+                if (! empty($pluginMigrations)) {
+                    $paths = array_merge($paths, $pluginMigrations);
+                } else {
+                    $localPluginPath = realpath(__DIR__ . '/../../../database/migrations/add_filament_columns_to_settings_table.php');
+                    if ($localPluginPath && file_exists($localPluginPath)) {
+                        $paths[] = $localPluginPath;
+                    }
+                }
+
+                if (! empty($paths)) {
+                    \Illuminate\Support\Facades\Artisan::call('migrate', [
+                        '--path' => $paths,
+                        '--force' => true,
+                    ]);
+                }
             } catch (\Exception $e) {
                 // Catch migration failures gracefully
             }
