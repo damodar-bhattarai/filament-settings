@@ -222,6 +222,8 @@ class ManageSettings extends Page implements HasForms
                         ->body("'{$data['label']}' has been added to the '{$this->getGroupLabel($data['group'])}' tab.")
                         ->success()
                         ->send();
+
+                    $this->redirect(request()->header('Referer'));
                 })
                 ->visible(fn () => $this->modifyMode && $this->canModifyFields()),
 
@@ -265,6 +267,8 @@ class ManageSettings extends Page implements HasForms
                         ->body("'{$data['tab_label']}' tab has been added.")
                         ->success()
                         ->send();
+
+                    $this->redirect(request()->header('Referer'));
                 })
                 ->visible(fn () => $this->modifyMode && $this->canModifyFields()),
         ];
@@ -464,6 +468,8 @@ class ManageSettings extends Page implements HasForms
                         ->body("'{$setting->label}' moved to '{$this->getGroupLabel($data['target_group'])}'.")
                         ->success()
                         ->send();
+
+                    $this->redirect(request()->header('Referer'));
                 }),
         );
 
@@ -490,6 +496,8 @@ class ManageSettings extends Page implements HasForms
                         ->title('Label updated')
                         ->success()
                         ->send();
+
+                    $this->redirect(request()->header('Referer'));
                 }),
         );
 
@@ -514,6 +522,8 @@ class ManageSettings extends Page implements HasForms
                         ->body("'{$setting->label}' has been deleted.")
                         ->warning()
                         ->send();
+
+                    $this->redirect(request()->header('Referer'));
                 }),
         );
 
@@ -753,6 +763,8 @@ class ManageSettings extends Page implements HasForms
 
         $this->clearSettingsCache();
         $this->fillFormFromDatabase();
+
+        $this->redirect(request()->header('Referer'));
     }
 
     /**
