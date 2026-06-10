@@ -642,7 +642,7 @@ class ManageSettings extends Page implements HasForms
 
         $urlParts = parse_url($url);
         parse_str($urlParts['query'] ?? '', $query);
-        $query['modifyMode'] = 1;
+        $query['modifyMode'] = 'true';
 
         $newQuery = http_build_query($query);
 
