@@ -6,7 +6,7 @@
 
 A powerful, tabbed settings management page for your Filament panel that lets you manage all your website settings — general info, social links, SEO, appearance, custom CSS/JS — from one beautiful interface.
 
-![App Settings Screenshot](https://raw.githubusercontent.com/damodar-bhattarai/filament-settings/main/art/screenshot.png)
+![App Settings Screenshot](https://raw.githubusercontent.com/damodar-bhattarai/filament-settings/main/art/screenshot.jpg)
 
 ## Features
 
