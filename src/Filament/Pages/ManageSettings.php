@@ -275,7 +275,7 @@ class ManageSettings extends Page implements HasForms
 
     // ─── Form Definition ─────────────────────────────────────────────
 
-    public function form(Form $form): Form
+    public function form($form)
     {
         return $form
             ->schema([
