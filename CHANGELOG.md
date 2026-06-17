@@ -2,6 +2,12 @@
 
 All notable changes to `filament-settings` will be documented in this file.
 
+## v1.2.1 - 2026-06-17
+
+### Fixed
+
+- Require `damodar-bhattarai/settings` v1.1.4 to avoid cached Collection unserialization errors on Laravel 13.
+
 ## v1.1.0 - 2026-06-10
 
 ### 🎉 Initial Release
